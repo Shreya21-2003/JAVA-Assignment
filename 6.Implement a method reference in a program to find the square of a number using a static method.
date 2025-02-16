@@ -1,0 +1,21 @@
+// File: MethodReferenceExample.java
+import java.util.function.Function;
+
+public class MethodReferenceExample {
+    // Static method to compute square of a number
+    public static int square(int num) {
+        return num * num;
+    }
+
+    public static void main(String[] args) {
+        // Using method reference to refer to the static method square
+        Function<Integer, Integer> squareFunction = MethodReferenceExample::square;
+
+        // Testing the method reference
+        int number = 5;
+        int result = squareFunction.apply(number);
+
+        // Display the result
+        System.out.println("Square of " + number + " is: " + result);
+    }
+}
