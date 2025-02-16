@@ -1,0 +1,22 @@
+// File: SortStringsDescending.java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class SortStringsDescending {
+    public static void main(String[] args) {
+        // Creating a list of strings
+        List<String> words = new ArrayList<>();
+        words.add("Apple");
+        words.add("Orange");
+        words.add("Banana");
+        words.add("Grapes");
+        words.add("Mango");
+
+        // Sorting the list in descending order using a lambda expression
+        words.sort((str1, str2) -> str2.compareTo(str1));
+
+        // Displaying the sorted list
+        System.out.println("Sorted list in descending order: " + words);
+    }
+}
