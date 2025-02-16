@@ -1,0 +1,20 @@
+
+package utilities;
+
+public class MathUtils {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+}
+import utilities.MathUtils; 
+
+public class MainApp {
+    public static void main(String[] args) {
+        int num1 = 10;
+        int num2 = 20;
+        
+        int sum = MathUtils.add(num1, num2);
+        
+        System.out.println("Sum of " + num1 + " and " + num2 + " is: " + sum);
+    }
+}
