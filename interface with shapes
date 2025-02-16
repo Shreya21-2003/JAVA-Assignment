@@ -1,0 +1,50 @@
+// File: shapes/Shape.java
+package shapes;
+
+public interface Shape {
+    double area();      // Method to calculate area
+    double perimeter(); // Method to calculate perimeter
+}
+
+// File: shapes/Circle.java
+package shapes;
+
+public class Circle implements Shape {
+    private double radius;
+
+    // Constructor
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    // Implementing the area method
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+
+    // Implementing the perimeter method (circumference)
+    @Override
+    public double perimeter() {
+        return 2 * Math.PI * radius;
+    }
+}
+
+// File: MainApp.java
+import shapes.Shape;
+import shapes.Circle;
+import shapes.Rectangle;
+
+public class MainApp {
+    public static void main(String[] args) {
+        // Create a Circle object with radius 5
+        Shape circle = new Circle(5);
+        System.out.println("Circle Area: " + circle.area());
+        System.out.println("Circle Perimeter: " + circle.perimeter());
+
+        // Create a Rectangle object with length 4 and width 6
+        Shape rectangle = new Rectangle(4, 6);
+        System.out.println("Rectangle Area: " + rectangle.area());
+        System.out.println("Rectangle Perimeter: " + rectangle.perimeter());
+    }
+}
