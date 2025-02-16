@@ -1,0 +1,43 @@
+// File: FactorialExceptionExample.java
+import java.util.Scanner;
+
+// Custom exception for negative numbers
+class NegativeNumberException extends Exception {
+    public NegativeNumberException(String message) {
+        super(message);
+    }
+}
+
+public class FactorialExceptionExample {
+
+    // Method to calculate factorial with 'throws' declaration
+    public static long factorial(int n) throws NegativeNumberException {
+        if (n < 0) {
+            throw new NegativeNumberException("Factorial of a negative number is not defined.");
+        }
+
+        long fact = 1;
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Taking user input for number
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+
+        try {
+            long result = factorial(number); // Method with 'throws' is called
+            System.out.println("Factorial of " + number + " is: " + result);
+        } catch (NegativeNumberException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        // Closing the scanner
+        scanner.close();
+    }
+}
