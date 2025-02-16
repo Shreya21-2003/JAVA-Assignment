@@ -1,0 +1,36 @@
+// File: TryCatchExample.java
+import java.util.Scanner;
+
+public class TryCatchExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Taking user input for two numbers
+        System.out.print("Enter numerator: ");
+        int numerator = scanner.nextInt();
+
+        System.out.print("Enter denominator: ");
+        int denominator = scanner.nextInt();
+
+        // Demonstrating try-catch block
+        try {
+            int result = numerator / denominator; // May throw ArithmeticException
+            System.out.println("Result (try-catch): " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught in try-catch: Division by zero is not allowed.");
+        }
+
+        // Demonstrating try-catch-finally block
+        try {
+            int result = numerator / denominator; // May throw ArithmeticException
+            System.out.println("Result (try-catch-finally): " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught in try-catch-finally: Division by zero is not allowed.");
+        } finally {
+            System.out.println("Finally block executed: Cleaning up resources.");
+        }
+
+        // Closing the scanner
+        scanner.close();
+    }
+}
