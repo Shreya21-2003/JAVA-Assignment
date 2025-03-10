@@ -1,0 +1,97 @@
+// Shared Buffer Class
+class Buffer {
+    private int data;
+    private boolean isEmpty = true; // buffer initially empty
+
+    // Method to produce data
+    public synchronized void produce(int value) {
+        while (!isEmpty) { // wait if buffer is not empty
+            try {
+                wait(); // wait until consumer consumes
+            } catch (InterruptedException e) {
+                System.out.println("Producer interrupted");
+            }
+        }
+
+        data = value;
+        isEmpty = false; // buffer now has data
+        System.out.println("Produced: " + data);
+
+        notify(); // notify consumer to consume
+    }
+
+    // Method to consume data
+    public synchronized void consume() {
+        while (isEmpty) { // wait if buffer is empty
+            try {
+                wait(); // wait until producer produces
+            } catch (InterruptedException e) {
+                System.out.println("Consumer interrupted");
+            }
+        }
+
+        System.out.println("Consumed: " + data);
+        isEmpty = true; // buffer now empty
+
+        notify(); // notify producer to produce
+    }
+}
+
+// Producer class implementing Runnable
+class Producer implements Runnable {
+    private Buffer buffer;
+
+    public Producer(Buffer buffer) {
+        this.buffer = buffer;
+    }
+
+    @Override
+    public void run() {
+        int value = 1;
+        while (value <= 5) { // produce 5 items
+            buffer.produce(value);
+            value++;
+
+            try {
+                Thread.sleep(500); // simulate time taken to produce
+            } catch (InterruptedException e) {
+                System.out.println("Producer thread interrupted");
+            }
+        }
+    }
+}
+
+class Consumer implements Runnable {
+    private Buffer buffer;
+
+    public Consumer(Buffer buffer) {
+        this.buffer = buffer;
+    }
+
+    @Override
+    public void run() {
+        int count = 1;
+        while (count <= 5) { 
+            buffer.consume();
+            count++;
+
+            try {
+                Thread.sleep(800); 
+            } catch (InterruptedException e) {
+                System.out.println("Consumer thread interrupted");
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Buffer buffer = new Buffer(); 
+
+        Thread producerThread = new Thread(new Producer(buffer));
+        Thread consumerThread = new Thread(new Consumer(buffer));
+
+        producerThread.start();
+        consumerThread.start();
+    }
+}
