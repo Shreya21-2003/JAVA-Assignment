@@ -1,0 +1,42 @@
+class ThreadOne implements Runnable {
+    @Override
+    public void run() {
+        while (true) { 
+            System.out.println("Thread 1");
+            try {
+                Thread.sleep(1000); 
+            } catch (InterruptedException e) {
+                System.out.println("Thread 1 interrupted.");
+                break; 
+            }
+        }
+    }
+}
+
+class ThreadTwo implements Runnable {
+    @Override
+    public void run() {
+        while (true) { 
+            System.out.println("Thread 2");
+            try {
+                Thread.sleep(2000); 
+            } catch (InterruptedException e) {
+                System.out.println("Thread 2 interrupted.");
+                break; 
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ThreadOne t1 = new ThreadOne();
+        ThreadTwo t2 = new ThreadTwo();
+
+        Thread thread1 = new Thread(t1);
+        Thread thread2 = new Thread(t2);
+
+        thread1.start();
+        thread2.start();
+    }
+}
