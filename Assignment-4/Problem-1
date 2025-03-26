@@ -1,0 +1,32 @@
+// Define a generic class
+class Container<T> {
+    private T value;  // Generic variable
+
+    // Constructor
+    public Container(T value) {
+        this.value = value;
+    }
+
+    // Getter method
+    public T getValue() {
+        return value;
+    }
+
+    // Setter method
+    public void setValue(T value) {
+        this.value = value;
+    }
+}
+
+// Main class to test the generic class
+public class GenericClassExample {
+    public static void main(String[] args) {
+        // Creating an Integer container
+        Container<Integer> intContainer = new Container<>(100);
+        System.out.println("Integer Value: " + intContainer.getValue());
+
+        // Creating a String container
+        Container<String> stringContainer = new Container<>("Hello Generics");
+        System.out.println("String Value: " + stringContainer.getValue());
+    }
+}
