@@ -1,0 +1,24 @@
+import java.util.*;
+
+public class SortArrayListExample {
+    public static void main(String[] args) {
+        // Creating an ArrayList of Strings
+        ArrayList<String> words = new ArrayList<>();
+        words.add("Banana");
+        words.add("Apple");
+        words.add("Mango");
+        words.add("Grapes");
+        words.add("Cherry");
+
+        // Printing original list
+        System.out.println("Original List: " + words);
+
+        // Sorting in ascending order (A-Z)
+        Collections.sort(words);
+        System.out.println("Sorted in Ascending Order (A-Z): " + words);
+
+        // Sorting in descending order (Z-A)
+        Collections.sort(words, Collections.reverseOrder());
+        System.out.println("Sorted in Descending Order (Z-A): " + words);
+    }
+}
