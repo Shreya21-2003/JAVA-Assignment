@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class ListPerformanceComparison {
+    private static final int ELEMENTS = 100000;  // Number of elements for testing
+
+    public static void main(String[] args) {
+        List<Integer> arrayList = new ArrayList<>();
+        List<Integer> linkedList = new LinkedList<>();
+
+        // Populate both lists with initial values
+        for (int i = 0; i < ELEMENTS; i++) {
+            arrayList.add(i);
+            linkedList.add(i);
+        }
+
+        // Measure performance for adding elements at the beginning
+        System.out.println("Adding elements at the beginning:");
+        measureTime(() -> arrayList.add(0, -1), "ArrayList");
+        measureTime(() -> linkedList.add(0, -1), "LinkedList");
+
+        // Measure performance for removing elements from the middle
+        System.out.println("\nRemoving elements from the middle:");
+        measureTime(() -> arrayList.remove(ELEMENTS / 2), "ArrayList");
+        measureTime(() -> linkedList.remove(ELEMENTS / 2), "LinkedList");
+
+        // Measure performance for iterating through the list
+        System.out.println("\nIterating through the list:");
+        measureTime(() -> {
+            for (Integer i : arrayList) {} 
+        }, "ArrayList");
+
+        measureTime(() -> {
+            for (Integer i : linkedList) {} 
+        }, "LinkedList");
+    }
+
+    // Utility method to measure execution time
+    private static void measureTime(Runnable task, String listType) {
+        long startTime = System.nanoTime();
+        task.run();
+        long endTime = System.nanoTime();
+        System.out.println(listType + " took " + (endTime - startTime) / 1_000_000.0 + " ms");
+    }
+}
