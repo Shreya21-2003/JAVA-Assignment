@@ -1,0 +1,42 @@
+import java.util.List;
+import java.util.Collections;
+
+// Generic class to find min and max values
+class MinMaxFinder<T extends Comparable<T>> {
+    private List<T> elements;  // List of elements
+
+    // Constructor
+    public MinMaxFinder(List<T> elements) {
+        this.elements = elements;
+    }
+
+    // Method to find minimum element
+    public T findMin() {
+        return Collections.min(elements);  // Uses Collections.min()
+    }
+
+    // Method to find maximum element
+    public T findMax() {
+        return Collections.max(elements);  // Uses Collections.max()
+    }
+}
+
+// Main class to test the generic class
+import java.util.Arrays;
+public class MinMaxFinderDemo {
+    public static void main(String[] args) {
+        // List of Integers
+        List<Integer> intList = Arrays.asList(10, 45, 23, 89, 5);
+        MinMaxFinder<Integer> intFinder = new MinMaxFinder<>(intList);
+        System.out.println("Integer List: " + intList);
+        System.out.println("Minimum Integer: " + intFinder.findMin());
+        System.out.println("Maximum Integer: " + intFinder.findMax());
+
+        // List of Strings
+        List<String> stringList = Arrays.asList("Apple", "Mango", "Banana", "Cherry");
+        MinMaxFinder<String> stringFinder = new MinMaxFinder<>(stringList);
+        System.out.println("\nString List: " + stringList);
+        System.out.println("Minimum String: " + stringFinder.findMin());
+        System.out.println("Maximum String: " + stringFinder.findMax());
+    }
+}
