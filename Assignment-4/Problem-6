@@ -1,0 +1,19 @@
+import java.util.HashSet;
+
+public class HashSetUniqueness {
+    public static void main(String[] args) {
+        // Creating a HashSet of Strings
+        HashSet<String> fruits = new HashSet<>();
+
+        // Adding elements to HashSet
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Mango");
+        fruits.add("Grapes");
+        fruits.add("Apple");  // Attempting to add duplicate
+        fruits.add("Banana"); // Attempting to add duplicate
+
+        // Printing the HashSet
+        System.out.println("HashSet elements: " + fruits);
+    }
+}
