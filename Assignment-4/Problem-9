@@ -1,0 +1,23 @@
+import java.util.LinkedHashSet;
+import java.util.Iterator;
+
+public class LinkedHashSetExample {
+    public static void main(String[] args) {
+        // Creating a LinkedHashSet of Strings
+        LinkedHashSet<String> cities = new LinkedHashSet<>();
+
+        // Adding elements to the LinkedHashSet
+        cities.add("New York");
+        cities.add("London");
+        cities.add("Tokyo");
+        cities.add("Paris");
+        cities.add("Sydney");
+
+        // Iterating over the LinkedHashSet
+        System.out.println("Iterating over LinkedHashSet (Insertion Order Preserved):");
+        Iterator<String> iterator = cities.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+}
