@@ -1,0 +1,48 @@
+import java.lang.annotation.*;
+import java.lang.reflect.*;
+
+@Retention(RetentionPolicy.RUNTIME)  // Available at runtime
+@Target({ElementType.METHOD, ElementType.FIELD})  // Can be applied to methods and fields
+@interface MyCustomAnnotation {
+    String description() default "No description";  // Optional description
+    int value() default 0;  // Optional value
+}
+
+class MyClass {
+    
+    @MyCustomAnnotation(description = "This is a custom annotation on field", value = 100)
+    private String myField;
+    
+    public MyClass(String myField) {
+        this.myField = myField;
+    }
+
+    @MyCustomAnnotation(description = "Custom annotation on method", value = 200)
+    public void myMethod() {
+        System.out.println("Method executed: " + myField);
+    }
+}
+
+public class AnnotationDemo {
+    public static void main(String[] args) throws Exception {
+        MyClass myClassInstance = new MyClass("Hello, Reflection!");
+
+        Field field = MyClass.class.getDeclaredField("myField");
+        if (field.isAnnotationPresent(MyCustomAnnotation.class)) {
+            MyCustomAnnotation fieldAnnotation = field.getAnnotation(MyCustomAnnotation.class);
+            System.out.println("Field Annotation:");
+            System.out.println("Description: " + fieldAnnotation.description());
+            System.out.println("Value: " + fieldAnnotation.value());
+        }
+
+        Method method = MyClass.class.getDeclaredMethod("myMethod");
+        if (method.isAnnotationPresent(MyCustomAnnotation.class)) {
+            MyCustomAnnotation methodAnnotation = method.getAnnotation(MyCustomAnnotation.class);
+            System.out.println("\nMethod Annotation:");
+            System.out.println("Description: " + methodAnnotation.description());
+            System.out.println("Value: " + methodAnnotation.value());
+
+            method.invoke(myClassInstance);
+        }
+    }
+}
