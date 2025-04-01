@@ -1,0 +1,12 @@
+import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)  
+@interface LogExecutionTime {}
+
+class Example {
+    @LogExecutionTime
+    public void execute() {
+        System.out.println("Executing...");
+    }
+}
