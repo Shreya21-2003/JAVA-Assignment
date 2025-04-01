@@ -1,0 +1,43 @@
+import java.lang.annotation.*;
+import java.lang.reflect.Method;
+
+@Retention(RetentionPolicy.RUNTIME)  
+@Target(ElementType.METHOD)          
+@interface TaskInfo {
+    String author() default "Unknown";  
+    int priority() default 1;           
+}
+
+class TaskManager {
+    
+    @TaskInfo(author = "Shreya", priority = 3)  
+    public void highPriorityTask() {
+        System.out.println("Executing high-priority task.");
+    }
+
+    @TaskInfo  
+    public void defaultTask() {
+        System.out.println("Executing task with default settings.");
+    }
+}
+
+public class AnnotationProcessor {
+    public static void main(String[] args) {
+        TaskManager taskManager = new TaskManager();
+        taskManager.highPriorityTask();
+        taskManager.defaultTask();
+        
+        System.out.println("\n--- Annotation Details ---");
+
+        Class<TaskManager> obj = TaskManager.class;
+        for (Method method : obj.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(TaskInfo.class)) {
+                TaskInfo task = method.getAnnotation(TaskInfo.class);
+                System.out.println("Method: " + method.getName());
+                System.out.println("Author: " + task.author());
+                System.out.println("Priority: " + task.priority());
+                System.out.println("-------------------------");
+            }
+        }
+    }
+}
