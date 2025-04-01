@@ -1,0 +1,70 @@
+import java.lang.annotation.*;
+
+
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface JsonField {
+    String value();  
+}
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+
+public class JsonFieldSerializer extends JsonSerializer<Object> {
+
+    @Override
+    public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeStartObject();
+
+        Field[] fields = value.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(JsonField.class)) {
+                JsonField jsonField = field.getAnnotation(JsonField.class);
+                field.setAccessible(true);
+                try {
+                    gen.writeObjectField(jsonField.value(), field.get(value));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        gen.writeEndObject();
+    }
+}
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(using = JsonFieldSerializer.class)
+public class User {
+
+    @JsonField("user_name")
+    private String name;
+
+    @JsonField("user_email")
+    private String email;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+
