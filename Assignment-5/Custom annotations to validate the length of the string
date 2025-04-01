@@ -1,0 +1,61 @@
+import java.lang.annotation.*;
+import java.lang.reflect.Field;
+// Available at runtime
+@Target(ElementType.FIELD)           
+@interface StringLength {
+    int min() default 1;   
+    int max() default 10; 
+}
+
+class User {
+    
+    @StringLength(min = 3, max = 8)  
+    private String username;
+    
+    @StringLength(min = 5, max = 15) 
+    private String password;
+    
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+    
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+}
+
+public class AnnotationValidator {
+    
+    public static void validate(Object obj) throws IllegalAccessException {
+        Class<?> clazz = obj.getClass();
+        
+        for (Field field : clazz.getDeclaredFields()) {
+            if (field.isAnnotationPresent(StringLength.class)) {
+                StringLength annotation = field.getAnnotation(StringLength.class);
+                field.setAccessible(true);  // Access private fields
+                
+                String value = (String) field.get(obj);
+                int length = (value != null) ? value.length() : 0;
+                
+                if (length < annotation.min() || length > annotation.max()) {
+                    System.out.println("❌ Validation failed for field: " + field.getName());
+                    System.out.println("   → Value: \"" + value + "\" (Length: " + length + ")");
+                    System.out.println("   → Allowed Length: Min " + annotation.min() + ", Max " + annotation.max());
+                } else {
+                    System.out.println("✅ Validation passed for field: " + field.getName());
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IllegalAccessException {
+        User validUser = new User("Alice", "securePass123");
+        User invalidUser = new User("Al", "short");
+
+        System.out.println("\n🔍 Validating validUser:");
+        validate(validUser);
+
+        System.out.println("\n🔍 Validating invalidUser:");
+        validate(invalidUser);
+    }
+}
